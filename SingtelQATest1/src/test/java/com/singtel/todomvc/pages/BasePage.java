@@ -307,4 +307,12 @@ public class BasePage {
 		getCompletedButton().click();
 	}
 
+	public void clickOnToggleAll() {
+		try {
+			driver.findElement(By.xpath(XPATHS.XPATH_TOGGLE_ALL_LABEL)).click();
+		} catch (Exception e) {
+			throw new RuntimeException("Error occurred while clicking on toggle all", e);
+		}
+	}
+
 }

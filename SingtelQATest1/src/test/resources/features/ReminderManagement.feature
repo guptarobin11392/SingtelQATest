@@ -168,3 +168,19 @@ Scenario: As a user I should be able to see All Reminders by clicking All Filter
 	And I click on All Filter 
 	Then I should see "Reminder 2" in the reminder list 
 	And I should see "Reminder 1" in the reminder list 
+	
+Scenario: As a user I should be able to complete all my todo tasks
+	Given I am on the TODOMVC Home Page 
+	When I add "Reminder 1" as a new reminder 
+	And I add "Reminder 2" as a new reminder 
+	And I click on complete all todo
+	Then I should see Reminder count as 0 
+	
+Scenario: As a user I should be able to retain all my todo tasks
+	Given I am on the TODOMVC Home Page 
+	When I add "Reminder 1" as a new reminder 
+	And I add "Reminder 2" as a new reminder 
+	And I click on complete all todo
+	Then I should see Reminder count as 0 
+	And I click on complete all todo
+	Then I should see Reminder count as 2

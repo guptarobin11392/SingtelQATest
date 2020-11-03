@@ -207,4 +207,9 @@ public class StepDefinitions {
 	public void iClickOnAllFilter() {
 		basePage.clickAllFilter();
 	}
+
+	@When("I click on complete all todo")
+	public void iClickOnCompleteAllTodo() {
+		basePage.clickOnToggleAll();
+	}
 }
