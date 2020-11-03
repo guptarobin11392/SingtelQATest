@@ -5,11 +5,9 @@ Background: User is on the ToDoMVC Home Page
 	When User navigate to "http://todomvc.com/examples/vue/" 
 	Then User should see the ToDo MVC Home Page 
 	
-	#Completion logic Under UL(todo-list) tag, all the li tag should have class as "todo completed"
-	
 Scenario: As a user I should see the focus to be in Reminder box when I launch the website 
 	Given I am on the TODOMVC Home Page 
-	Then I should see cursor focus on "REMINDER_INPUT"
+	Then I should see cursor focus on "REMINDER_INPUT" 
 	
 Scenario Outline: As a user I should be able to add task to my to-do list 
 	Given I am on the TODOMVC Home Page 
@@ -18,10 +16,8 @@ Scenario Outline: As a user I should be able to add task to my to-do list
 	
 	Examples: 
 		| ReminderName  |
-		| Reminder 1 |
-		| Reminder 2 |
-		
-		
+		| "Reminder 1" |
+		| "Reminder 2" |		
 		
 Scenario: As a user I should be able to see the count of my tasks 
 	Given I am on the TODOMVC Home Page 
@@ -38,7 +34,7 @@ Scenario: As a user I should be able to see the count of my tasks
 		| Reminder 10 |
 	Then I should see Reminder count as 10 
 	
-
+	
 Scenario: As a user I should be able to add multiple tasks to my to-do list 
 	Given I am on the TODOMVC Home Page 
 	When I add 100 random tasks to my to-do list 
@@ -53,25 +49,24 @@ Scenario: As a user I should be able to add different type of values as reminder
 		| !@#$%^^^&&&**___ |
 		| 1231456798798 |
 		| <><><><> |
-		|    Reminder1     |
+		|    Reminder 1     |
 		| Reminder 8 |
 		| Reminder 9 |
 		| Reminder 10 | 
 	Then I should see Reminder count as 10 
-
+	
 	
 Scenario: As a user I should not be able to add blank value as reminder 
 	Given I am on the TODOMVC Home Page 
 	When I add "      " as a new reminder 
 	Then I should see Reminder count as blank 
 	
-Scenario: 
-	As a user I should see that my task is added and is trimmed with white spaces 
+Scenario: As a user I should see that my task is added and is trimmed with white spaces 
 	Given I am on the TODOMVC Home Page 
-	When I add "   Reminder1   " as a new reminder 
-	Then I should see "Reminder1" in the reminder list 
+	When I add "   Reminder 1   " as a new reminder 
+	Then I should see "Reminder 1" in the reminder list 
 	
-
+	
 Scenario: As a user I should be able to delete my task from the to-do list 
 	Given I am on the TODOMVC Home Page 
 	When I add "Reminder 1" as a new reminder 
@@ -79,17 +74,17 @@ Scenario: As a user I should be able to delete my task from the to-do list
 	Then I should see Reminder count as 2 
 	When I delete "Reminder 1" task 
 	Then I should see Reminder count as 1 
-	And I should not see "Reminder1" in the reminder list 
-
-
+	And I should not see "Reminder 1" in the reminder list 
+	
+	
 Scenario: As a user I should be able to complete a reminder task 
 	Given I am on the TODOMVC Home Page 
 	When I add "Reminder 1" as a new reminder 
 	And I complete "Reminder 1" task 
 	Then I should see "Reminder 1" task status as complete 
 	Then I should see Reminder count as 0 
-
-
+	
+	
 Scenario: As a user I should be able to complete some reminder task out of all 
 	Given I am on the TODOMVC Home Page 
 	When I add 10 reminders 
@@ -116,7 +111,7 @@ Scenario: As a user I should be able to complete some reminder task out of all
 		| Reminder 9 |
 		| Reminder 10 | 
 	And I should see Reminder count as 9 
-
+	
 Scenario: As a user I should be able to clear completed reminder task 
 	Given I am on the TODOMVC Home Page 
 	When I add "Reminder 1" as a new reminder 
@@ -125,7 +120,7 @@ Scenario: As a user I should be able to clear completed reminder task
 	And I complete "Reminder 1" task 
 	Then I should see Clear Completed button 
 	When I click on clear completed button 
-	Then I should not see "Reminder1" in the reminder list 
+	Then I should not see "Reminder 1" in the reminder list 
 	And I should see Reminder count as 1 
 	
 Scenario: As a user I should be able to retain a completed reminder task 
@@ -143,5 +138,33 @@ Scenario: As a user I should be able to change my reminder text
 	When I add "Reminder 1" as a new reminder 
 	Then I should see Reminder count as 1 
 	When I change the task name from "Reminder 1" to "Reminder 2" 
-	Then I should not see "Reminder1" in the reminder list 
-	And I should see "Reminder2" in the reminder list 
+	Then I should not see "Reminder 1" in the reminder list 
+	And I should see "Reminder 2" in the reminder list 
+	
+Scenario: As a user I should be able to filter Active Reminders 
+	Given I am on the TODOMVC Home Page 
+	When I add "Reminder 1" as a new reminder 
+	And I add "Reminder 2" as a new reminder 
+	And I complete "Reminder 1" task 
+	And I click on Active Filter 
+	Then I should see "Reminder 2" in the reminder list 
+	And I should not see "Reminder 1" in the reminder list 
+	
+Scenario: As a user I should be able to filter Completed Reminders 
+	Given I am on the TODOMVC Home Page 
+	When I add "Reminder 1" as a new reminder 
+	And I add "Reminder 2" as a new reminder 
+	And I complete "Reminder 1" task 
+	And I click on Complete Filter 
+	Then I should not see "Reminder 2" in the reminder list 
+	And I should see "Reminder 1" in the reminder list 
+	
+Scenario: As a user I should be able to see All Reminders by clicking All Filter button 
+	Given I am on the TODOMVC Home Page 
+	When I add "Reminder 1" as a new reminder 
+	And I add "Reminder 2" as a new reminder 
+	And I complete "Reminder 1" task 
+	And I click on Complete Filter 
+	And I click on All Filter 
+	Then I should see "Reminder 2" in the reminder list 
+	And I should see "Reminder 1" in the reminder list 

@@ -2,6 +2,7 @@ package com.singtel.todomvc.pages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.singtel.todomvc.test.utilities.SetupWebDriverInstance;
@@ -27,7 +29,7 @@ public class BasePage {
 	}
 
 	private WebDriver driver;
-	@SuppressWarnings("unused")
+
 	private WebDriverWait wait;
 
 	private WebElement reminderInputBox;
@@ -209,9 +211,10 @@ public class BasePage {
 
 	public void deleteReminder(String reminderLabel) {
 		assertTrue("Reminder is not present in the list", validateReminderPresent(reminderLabel));
-		WebElement destroyCross = driver
-				.findElement(By.xpath(XPATHS.XPATH_DESTROY_BUTTON.replace(REMINDERNAME, reminderLabel)));
-		setFocusTo(destroyCross);
+		setFocusTo(driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_LABEL.replace(REMINDERNAME, reminderLabel))));
+		WebElement destroyCross = wait.until(ExpectedConditions.visibilityOfElementLocated(
+				By.xpath(XPATHS.XPATH_DESTROY_BUTTON.replace(REMINDERNAME, reminderLabel))));
+		assertNotNull("Destro Cross is not found for Reminder - " + reminderLabel, destroyCross);
 		destroyCross.click();
 	}
 
@@ -263,13 +266,9 @@ public class BasePage {
 		try {
 			WebElement editBox = driver
 					.findElement(By.xpath(XPATHS.XPATH_REMINDER_EDIT_LABEL.replace(REMINDERNAME, originalReminder)));
-			String wtxContextId = editBox.getAttribute("wtx-context");
-			WebElement editBoxUsingID = driver.findElement(By.xpath("//input[@wtx-context='" + wtxContextId + "']"));
-			editBoxUsingID.clear();
-			editBoxUsingID.sendKeys(targetReminder);
-			editBoxUsingID.sendKeys(Keys.RETURN);
-//		actions.sendKeys(targetReminder).build().perform();
-//			actions.sendKeys(Keys.RETURN).perform();
+			assertNotNull("Edit box could not be found for Reminder - " + originalReminder, editBox);
+			editBox.sendKeys(Keys.CONTROL, "a", Keys.NULL);
+			editBox.sendKeys(targetReminder, Keys.RETURN);
 		} catch (Exception e) {
 			throw new RuntimeException("Error occurred while renaming the Reminder", e);
 		}
@@ -291,6 +290,21 @@ public class BasePage {
 	public void validateBlankReminderCount() {
 		setElement(REMINDER_COUNT_LABEL);
 		assertEquals("Reminder Count is not blank", String.valueOf(""), getReminderCountLabel().getText().trim());
+	}
+
+	public void clickActiveFilter() {
+		setElement(ACTIVE_BUTTON);
+		getActiveButton().click();
+	}
+
+	public void clickAllFilter() {
+		setElement(ALL_BUTTON);
+		getAllButton().click();
+	}
+
+	public void clickCompleteFilter() {
+		setElement(COMPLETED_BUTTON);
+		getCompletedButton().click();
 	}
 
 }

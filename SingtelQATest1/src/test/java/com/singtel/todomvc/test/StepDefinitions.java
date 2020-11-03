@@ -5,9 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -108,7 +106,7 @@ public class StepDefinitions {
 	public void i_should_see_reminder_count_as(Integer reminderCount) {
 		basePage.validateReminderCount(reminderCount);
 	}
-	
+
 	@Then("I should see Reminder count as blank")
 	public void i_should_see_reminder_count_as() {
 		basePage.validateBlankReminderCount();
@@ -125,9 +123,7 @@ public class StepDefinitions {
 	@When("I add {int} random tasks to my to-do list")
 	public void i_add_random_tasks_to_my_to_do_list(int taskCount) {
 		for (int counter = 1; counter <= taskCount; counter++) {
-			byte[] array = new byte[7]; // length is bounded by 7
-			new Random().nextBytes(array);
-			basePage.inputNewReminder(new String(array, Charset.forName("UTF-8")));
+			basePage.inputNewReminder("Reminder " + counter);
 			basePage.pressEnterForReminderAddition();
 		}
 	}
@@ -195,5 +191,20 @@ public class StepDefinitions {
 	@Then("I should see cursor focus on {string}")
 	public void I_should_see_cursor_focus_on(String elementName) {
 		assertTrue(basePage.validateIfElementIsFocused(elementName));
+	}
+
+	@When("I click on Complete Filter")
+	public void iClickOnCompleteFilter() {
+		basePage.clickCompleteFilter();
+	}
+
+	@When("I click on Active Filter")
+	public void iClickOnActiveFilter() {
+		basePage.clickActiveFilter();
+	}
+
+	@When("I click on All Filter")
+	public void iClickOnAllFilter() {
+		basePage.clickAllFilter();
 	}
 }
