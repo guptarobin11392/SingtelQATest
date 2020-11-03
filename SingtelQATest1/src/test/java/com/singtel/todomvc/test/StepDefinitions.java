@@ -108,6 +108,11 @@ public class StepDefinitions {
 	public void i_should_see_reminder_count_as(Integer reminderCount) {
 		basePage.validateReminderCount(reminderCount);
 	}
+	
+	@Then("I should see Reminder count as blank")
+	public void i_should_see_reminder_count_as() {
+		basePage.validateBlankReminderCount();
+	}
 
 	private static void sleepFor(int seconds) {
 		try {

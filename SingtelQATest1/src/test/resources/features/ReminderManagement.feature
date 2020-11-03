@@ -18,24 +18,24 @@ Scenario Outline: As a user I should be able to add task to my to-do list
 	
 	Examples: 
 		| ReminderName  |
-		| "Reminder 1" |
-		| "Reminder 2" |
+		| Reminder 1 |
+		| Reminder 2 |
 		
 		
 		
 Scenario: As a user I should be able to see the count of my tasks 
 	Given I am on the TODOMVC Home Page 
 	When I add 10 reminders 
-		| "Reminder 1" |
-		| "Reminder 2" |
-		| "Reminder 3" |
-		| "Reminder 4" |
-		| "Reminder 5" |
-		| "Reminder 6" |
-		| "Reminder 7" |
-		| "Reminder 8" |
-		| "Reminder 9" |
-		| "Reminder 10" |
+		| Reminder 1 |
+		| Reminder 2 |
+		| Reminder 3 |
+		| Reminder 4 |
+		| Reminder 5 |
+		| Reminder 6 |
+		| Reminder 7 |
+		| Reminder 8 |
+		| Reminder 9 |
+		| Reminder 10 |
 	Then I should see Reminder count as 10 
 	
 
@@ -47,23 +47,23 @@ Scenario: As a user I should be able to add multiple tasks to my to-do list
 Scenario: As a user I should be able to add different type of values as reminder 
 	Given I am on the TODOMVC Home Page 
 	When I add 10 reminders 
-		| "Reminder 1" |
-		| "_________________Reminder 2" |
-		| "!!!!!!Reminder 3" |
-		| "!@#$%^^^&&&**___" |
-		| "1231456798798" |
-		| "<><><><>" |
-		| "   Reminder1    " |
-		| "Reminder 8" |
-		| "Reminder 9" |
-		| "Reminder 10" | 
+		| Reminder 1 |
+		| _________________Reminder 2 |
+		| !!!!!!Reminder 3 |
+		| !@#$%^^^&&&**___ |
+		| 1231456798798 |
+		| <><><><> |
+		|    Reminder1     |
+		| Reminder 8 |
+		| Reminder 9 |
+		| Reminder 10 | 
 	Then I should see Reminder count as 10 
 
 	
 Scenario: As a user I should not be able to add blank value as reminder 
 	Given I am on the TODOMVC Home Page 
 	When I add "      " as a new reminder 
-	Then I should see Reminder count as 0 
+	Then I should see Reminder count as blank 
 	
 Scenario: 
 	As a user I should see that my task is added and is trimmed with white spaces 
@@ -93,28 +93,28 @@ Scenario: As a user I should be able to complete a reminder task
 Scenario: As a user I should be able to complete some reminder task out of all 
 	Given I am on the TODOMVC Home Page 
 	When I add 10 reminders 
-		| "Reminder 1" |
-		| "Reminder 2" |
-		| "Reminder 3" |
-		| "Reminder 4" |
-		| "Reminder 5" |
-		| "Reminder 6" |
-		| "Reminder 7" |
-		| "Reminder 8" |
-		| "Reminder 9" |
-		| "Reminder 10" | 
+		| Reminder 1 |
+		| Reminder 2 |
+		| Reminder 3 |
+		| Reminder 4 |
+		| Reminder 5 |
+		| Reminder 6 |
+		| Reminder 7 |
+		| Reminder 8 |
+		| Reminder 9 |
+		| Reminder 10 | 
 	And I complete "Reminder 5" task 
 	Then I should see "Reminder 5" task status as complete 
 	And I should see following task status as active 
-		| "Reminder 1" |
-		| "Reminder 2" |
-		| "Reminder 3" |
-		| "Reminder 4" |
-		| "Reminder 6" |
-		| "Reminder 7" |
-		| "Reminder 8" |
-		| "Reminder 9" |
-		| "Reminder 10" | 
+		| Reminder 1 |
+		| Reminder 2 |
+		| Reminder 3 |
+		| Reminder 4 |
+		| Reminder 6 |
+		| Reminder 7 |
+		| Reminder 8 |
+		| Reminder 9 |
+		| Reminder 10 | 
 	And I should see Reminder count as 9 
 
 Scenario: As a user I should be able to clear completed reminder task 

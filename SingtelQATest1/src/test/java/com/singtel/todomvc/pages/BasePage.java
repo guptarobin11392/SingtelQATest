@@ -288,4 +288,9 @@ public class BasePage {
 
 	}
 
+	public void validateBlankReminderCount() {
+		setElement(REMINDER_COUNT_LABEL);
+		assertEquals("Reminder Count is not blank", String.valueOf(""), getReminderCountLabel().getText().trim());
+	}
+
 }
