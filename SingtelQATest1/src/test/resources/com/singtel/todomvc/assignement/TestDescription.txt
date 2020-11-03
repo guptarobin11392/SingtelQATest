@@ -1,0 +1,15 @@
+Part 1: Coding skills
+Given the URL http://todomvc.com/examples/vue/
+Using BDD approach
+Translate the user stories into different scenarios Gherkins Given, When, Then
+User stories:
+In order to remember the things I want to do
+As a todoMVC user
+I want to manage my todo list
+(1) Think of different scenarios for this user story
+(2) Using a framework of your choice and tools such as Cucumber, Specflow, and
+Selenium API webdriver library, convert those scenarios you’ve created into
+automation steps
+Example of a scenario:
+create a list of 3 todo items
+And then remove 2 of the items and validate only 1 item is left in the list
