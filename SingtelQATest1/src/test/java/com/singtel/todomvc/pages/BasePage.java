@@ -18,6 +18,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.singtel.todomvc.test.utilities.SetupWebDriverInstance;
 import com.singtel.todomvc.test.utilities.XPATHS;
 
+/**
+ * @category Page Model Class
+ * @version V1
+ * @implNote This class serves as the module for TODO MVC WebSite Home Page
+ * @author ROBIN GUPTA
+ *
+ */
 public class BasePage {
 
 	private static Logger LOG = Logger.getLogger(BasePage.class);
@@ -129,33 +136,54 @@ public class BasePage {
 		this.todosHeader = todosHeader;
 	}
 
+	/**
+	 * @implNote Function is used to enter a Reminder in the input box
+	 * @param reminderLabel
+	 */
 	public void inputNewReminder(String reminderLabel) {
 		setElement(REMINDER_INPUT);
 		getReminderInputBox().sendKeys(reminderLabel);
 	}
 
+	/**
+	 * @implNote Function is used to add a reminder
+	 */
 	public void pressEnterForReminderAddition() {
 		setElement(REMINDER_INPUT);
 		getReminderInputBox().sendKeys(Keys.RETURN);
 	}
 
+	/**
+	 * Function is used to validate if the reminder is present in the current todo list
+	 * @param reminderLabel
+	 * @return true if exists
+	 * @return false if doesn't exists
+	 */
 	public boolean validateReminderPresent(String reminderLabel) {
 		try {
 			driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_LABEL.replace(REMINDERNAME, reminderLabel)));
 		} catch (Exception e) {
-//			LOG.error("Reminder not found - " + reminderLabel,
-//					new RuntimeException("Error while finding Reminder in the list", e));
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Function is used to validate the number of todo tasks in the list
+	 * @param reminderCount
+	 */
 	public void validateReminderCount(Integer reminderCount) {
 		setElement(REMINDER_COUNT_LABEL);
 		assertEquals("Reminder Count did not match", String.valueOf(reminderCount),
 				getReminderCountLabel().getText().trim());
 	}
 
+	/**
+	 * @category Utility Function
+	 * @implNote This function is used to set various elements as per the input
+	 * @param elementName
+	 * @throws RuntimeException if the element is not found on the DOM
+	 */
 	private void setElement(String elementName) {
 		try {
 			switch (elementName.toUpperCase()) {
@@ -199,6 +227,9 @@ public class BasePage {
 		this.clearCompleted = clearCompleted;
 	}
 
+	/**
+	 * Function validates if the count label is not visible
+	 */
 	public void validateCountNotVisible() {
 		try {
 			setElement(REMINDER_COUNT_LABEL);
@@ -209,25 +240,43 @@ public class BasePage {
 		}
 	}
 
+	/**
+	 * This function is used to delete an existing reminder
+	 * @param reminderLabel
+	 */
 	public void deleteReminder(String reminderLabel) {
 		assertTrue("Reminder is not present in the list", validateReminderPresent(reminderLabel));
 		setFocusTo(driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_LABEL.replace(REMINDERNAME, reminderLabel))));
 		WebElement destroyCross = wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.xpath(XPATHS.XPATH_DESTROY_BUTTON.replace(REMINDERNAME, reminderLabel))));
-		assertNotNull("Destro Cross is not found for Reminder - " + reminderLabel, destroyCross);
+		assertNotNull("Destroy Cross is not found for Reminder - " + reminderLabel, destroyCross);
 		destroyCross.click();
 	}
 
+	/**
+	 * This function is used to set focus to input element
+	 * @param element
+	 */
 	private void setFocusTo(WebElement element) {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(element).build().perform();
 	}
 
+	/**
+	 * This function is used to complete an existing todo task from the list
+	 * @param reminderLabel
+	 */
 	public void completeReminder(String reminderLabel) {
 		assertTrue("Reminder is not present in the list", validateReminderPresent(reminderLabel));
 		driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_CHECKBOX.replace(REMINDERNAME, reminderLabel))).click();
 	}
 
+	/**
+	 * Function is used to fetch the status of an existing todo task
+	 * @param reminderLabel
+	 * @return XPATHS.ACTIVE - task is active
+	 * @return XPATHS.COMPLETE - task is completed
+	 */
 	public String getReminderStatus(String reminderLabel) {
 		assertTrue("Reminder is not present in the list", validateReminderPresent(reminderLabel));
 		String status = driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_LABEL.replace(REMINDERNAME, reminderLabel)))
@@ -237,6 +286,10 @@ public class BasePage {
 		return XPATHS.COMPLETE;
 	}
 
+	/**
+	 * Function validates if "Clear Completed" button/link is visible on the page
+	 * @return true - if exists
+	 */
 	public boolean validateIsClearCompletedVisible() {
 		try {
 			setElement(CLEAR_COMPLETED);
@@ -246,17 +299,29 @@ public class BasePage {
 		return true;
 	}
 
+	/**
+	 * Function clicks on the "Clear Completed" link
+	 */
 	public void clickClearCompleted() {
 		assertTrue("Clear Completed Button is not visible", validateIsClearCompletedVisible());
 		getClearCompleted().click();
 	}
 
+	/**
+	 * This function is used to click on toggle checkbox of the element
+	 * @param reminderLabel
+	 */
 	public void activeReminder(String reminderLabel) {
 		assertTrue("Reminder not present in the todo list", validateReminderPresent(reminderLabel));
 		if (getReminderStatus(reminderLabel).equalsIgnoreCase(XPATHS.COMPLETE))
 			driver.findElement(By.xpath(XPATHS.XPATH_REMINDER_CHECKBOX.replace(REMINDERNAME, reminderLabel))).click();
 	}
 
+	/**
+	 * This function changes the "originalReminder" text to "targetReminder"
+	 * @param originalReminder
+	 * @param targetReminder
+	 */
 	public void changeReminderText(String originalReminder, String targetReminder) {
 		assertTrue("Reminder not present in the todo list", validateReminderPresent(originalReminder));
 		Actions actions = new Actions(driver);
@@ -276,6 +341,11 @@ public class BasePage {
 
 	}
 
+	/**
+	 * This function validates if the input element has focus
+	 * @param elementName
+	 * @return boolean
+	 */
 	public boolean validateIfElementIsFocused(String elementName) {
 		switch (elementName) {
 		case REMINDER_INPUT:
@@ -287,26 +357,41 @@ public class BasePage {
 
 	}
 
+	/**
+	 * Function validates if the Reminder count is blank on the page
+	 */
 	public void validateBlankReminderCount() {
 		setElement(REMINDER_COUNT_LABEL);
 		assertEquals("Reminder Count is not blank", String.valueOf(""), getReminderCountLabel().getText().trim());
 	}
 
+	/**
+	 * Function clicks on Active Filter
+	 */
 	public void clickActiveFilter() {
 		setElement(ACTIVE_BUTTON);
 		getActiveButton().click();
 	}
-
+	
+	/**
+	 * Function clicks on All Filter
+	 */
 	public void clickAllFilter() {
 		setElement(ALL_BUTTON);
 		getAllButton().click();
 	}
 
+	/**
+	 * Function clicks on Complete Filter
+	 */
 	public void clickCompleteFilter() {
 		setElement(COMPLETED_BUTTON);
 		getCompletedButton().click();
 	}
 
+	/**
+	 * Function clicks on toggle all button
+	 */
 	public void clickOnToggleAll() {
 		try {
 			driver.findElement(By.xpath(XPATHS.XPATH_TOGGLE_ALL_LABEL)).click();

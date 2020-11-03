@@ -1,5 +1,12 @@
 package com.singtel.todomvc.test.utilities;
 
+/**
+ * This class stores all the XPATH constants used in TODO MVC Tests
+ * 
+ * @category Utility Class
+ * @author ROBIN GUPTA
+ *
+ */
 public class XPATHS {
 	public static final String XPATH_REMINDER_INPUT_BOX = "//input[@placeholder='What needs to be done?']";
 	public static final String XPATH_ALL_BUTTON = "//a[.='All']";

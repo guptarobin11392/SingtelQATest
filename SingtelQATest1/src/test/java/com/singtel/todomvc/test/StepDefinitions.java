@@ -22,6 +22,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+/**
+ * This is the step definitions for all the Cucumber steps
+ * 
+ * @author ROBIN GUPTA
+ *
+ */
 public class StepDefinitions {
 
 	private Logger LOG = Logger.getLogger(StepDefinitions.class);

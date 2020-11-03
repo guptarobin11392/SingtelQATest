@@ -6,6 +6,11 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 
 import org.junit.runner.RunWith;
 
+/**
+ * This is the Cucumber Runner for this test
+ * @author ROBIN GUPTA
+ *
+ */
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = { "html:target/html-reports.html", "pretty:target/pretty-reports.log",
 		"junit:target/junit-reports.xml", "json:target/json-reports.json",

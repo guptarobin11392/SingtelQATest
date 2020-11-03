@@ -8,6 +8,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * This class serves a utility for WebDriver initialization
+ * @category Utility Class
+ * @author ROBIN GUPTA
+ *
+ */
 public class SetupWebDriverInstance {
 
 	private WebDriver driver;
